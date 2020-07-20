@@ -9,6 +9,7 @@ else {Write-Host "Logs Ordner nicht vorhanden" -ForegroundColor Red; (New-Item C
 if ((Get-WindowsFeature UpdateServices).InstallState -eq "Installed") {
     Write-Host "WSUS Skript wird ausgeführt"
 	.\Tools\WSUS.exe -FirstRun
+	.\Tools\Clean-WSUS.ps1
 } 
 else {
     Write-Host "WSUS is not installed on $hostname" -ForegroundColor Yellow
