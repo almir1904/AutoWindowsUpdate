@@ -417,12 +417,12 @@ function Optimize-WsusDatabase {
 
     # Check registry for WSUS database install type (SQL or WID)
     $wsusSqlServerName = (get-itemproperty "HKLM:\Software\Microsoft\Update Services\Server\Setup" -Name "SqlServername").SqlServername
-
+    $serverInstance = 'np:\\.\pipe\MICROSOFT##WID\tsql\query'
     # Set the named pipe to use based on WSUS db type
     if ($wsusSqlServerName -match 'SQLEXPRESS') {
         $serverInstance = 'np:\\.\pipe\MSSQL$SQLEXPRESS\sql\query'
     }
-    elseif (($wsusSqlServerName -match '##WIN') -Or ($wsusSqlServerName -match '##SSEE')) {
+    elseif (($wsusSqlServerName -match '##WID') -Or ($wsusSqlServerName -match '##SSEE')) {
         #Check OS version
         $osVersion = [decimal]("$(([environment]::OSVersion.Version).Major).$(([environment]::OSVersion.Version).Minor)")
 
@@ -465,7 +465,7 @@ function New-WsusMaintainenceTask($interval) {
     #>
 
     $taskName = "Optimize WSUS Server ($interval)"
-    $scriptPath = 'C:\Scripts'
+    $scriptPath = 'C:\Scripts\UpdateService\Tools'
 
     # Delete scheduled task with the same name if it already exists
     If (Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue) {
@@ -562,7 +562,7 @@ function Get-WsusIISConfig {
     $recyclingMemory = Get-IISConfigAttributeValue -ConfigElement $wsusPoolRecyclingConfig -AttributeName "memory"
     $recyclingPrivateMemory = Get-IISConfigAttributeValue -ConfigElement $wsusPoolRecyclingConfig -AttributeName "privateMemory"
 
-    $clientWebServiceConfig = Get-WebConfiguration -PSPath 'IIS:\Sites\WSUS Administration\ClientWebService' -Filter "system.web/httpRuntime"
+    $clientWebServiceConfig = Get-WebConfiguration -PSPath 'IIS:\Sites\WSUS-Verwaltung\ClientWebService' -Filter "system.web/httpRuntime"
 
     $clientMaxRequestLength = $clientWebServiceConfig | select-object -ExpandProperty maxRequestLength
     $clientExecutionTimeout = ($clientWebServiceConfig | select-object -ExpandProperty executionTimeout).TotalSeconds
@@ -595,7 +595,7 @@ function Test-WsusIISConfig ($settings, $recommended) {
     #>
 
     # Check if the IIS WSUS Client Web Service web.config is read only and make it RW if so
-    $wsusWebConfigPath = WebConfigFile -PSPath 'IIS:\Sites\WSUS Administration\ClientWebService' | Select-Object -ExpandProperty 'FullName'
+    $wsusWebConfigPath = WebConfigFile -PSPath 'IIS:\Sites\WSUS-Verwaltung\ClientWebService' | Select-Object -ExpandProperty 'FullName'
     if (Get-ItemProperty -Path $wsusWebConfigPath | Select-Object -ExpandProperty IsReadOnly) {
         Set-ItemProperty -Path $wsusWebConfigPath -Name IsReadOnly -Value $false
     }
@@ -684,11 +684,11 @@ function Update-WsusIISConfig ($settingKey, $recommendedValue) {
             Break
         }
         'ClientMaxRequestLength' {
-            Set-WebConfigurationProperty -PSPath 'IIS:\Sites\WSUS Administration\ClientWebService' -Filter "system.web/httpRuntime" -Name "maxRequestLength" -Value $recommendedValue
+            Set-WebConfigurationProperty -PSPath 'IIS:\Sites\WSUS-Verwaltung\ClientWebService' -Filter "system.web/httpRuntime" -Name "maxRequestLength" -Value $recommendedValue
             Break
         }
         'ClientExecutionTimeout' {
-            Set-WebConfigurationProperty -PSPath 'IIS:\Sites\WSUS Administration\ClientWebService' -Filter "system.web/httpRuntime" -Name "executionTimeout" -Value ([timespan]::FromSeconds($recommendedValue))
+            Set-WebConfigurationProperty -PSPath 'IIS:\Sites\WSUS-Verwaltung\ClientWebService' -Filter "system.web/httpRuntime" -Name "executionTimeout" -Value ([timespan]::FromSeconds($recommendedValue))
             Break
         }
         Default {}
