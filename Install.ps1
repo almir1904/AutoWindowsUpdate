@@ -47,6 +47,13 @@ else {
     Write-Host "posh-git Modul nicht installiert" -ForegroundColor Yellow
 	Install-Module -Name posh-git -Force
 }
+if (Get-Module -ListAvailable -Name SqlServer) {
+    Write-Host "posh-git Modul bereits installiert" -ForegroundColor Green
+} 
+else {
+    Write-Host "SQLServerClient Modul nicht installiert" -ForegroundColor Yellow
+	Install-Module -Name SqlServer -Force
+}
 Write-Host "Setup Powershell SSL" -ForegroundColor Yellow
 $AllProtocols = [System.Net.SecurityProtocolType]'Tls11,Tls12'
 [System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols
