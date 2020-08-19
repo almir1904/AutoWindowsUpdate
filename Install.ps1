@@ -114,7 +114,6 @@ if ((Test-Path -Path "C:\Scripts\UpdateService\Settings.ps1"))
 	.\Settings.ps1}
 	Else {Write-Host "No Settingsfile found using default Settings" -ForegroundColor Yellow}
 
-
 Write-Host "Install Update Task" -ForegroundColor Yellow
 $argument = '-NonInteractive -NoLogo -NoProfile -ExecutionPolicy Bypass -File "C:\Scripts\UpdateService\Install-Updates.ps1"'
 $action = New-ScheduledTaskAction -Execute $PWSH -Argument $argument
