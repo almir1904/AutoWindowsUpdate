@@ -1,0 +1,5 @@
+$AllowReboot=True
+$Mail=""
+$Pushover=""
+$UpdateTime="22:00"
+$MaintenanceTime="23:00"

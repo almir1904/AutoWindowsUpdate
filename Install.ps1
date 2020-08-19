@@ -22,6 +22,15 @@
 						  
 
 #>
+$UpdateTime="22:00"
+$MaintenanceTime="23:00"
+
+
+
+
+
+
+
 $host.ui.RawUI.WindowTitle = "Maintaince Script installing"
 if (Get-PackageProvider -ListAvailable -Name NuGet) {
     Write-Host "Nuget Repo bereits installiert" -ForegroundColor Green
@@ -58,7 +67,7 @@ Write-Host "Setup Powershell SSL" -ForegroundColor Yellow
 $AllProtocols = [System.Net.SecurityProtocolType]'Tls11,Tls12'
 [System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols
 
-if (Test-Path -Path c:\Scripts) {(Write-Host "Ordner Vorhanden" -ForegroundColor Green)} else {Write-Host "Ordner nicht Vorhanden" -ForegroundColor Red; (New-Item C:\Scripts -ItemType directory > $null) ; (Write-Host "Ordner erstellt" -ForegroundColor Green)}
+if (Test-Path -Path C:\Scripts) {(Write-Host "Ordner Vorhanden" -ForegroundColor Green)} else {Write-Host "Ordner nicht Vorhanden" -ForegroundColor Red; (New-Item C:\Scripts -ItemType directory > $null) ; (Write-Host "Ordner erstellt" -ForegroundColor Green)}
 
 if (!(Test-Path -Path "C:\Program Files\Git")) 
 	{(Write-Host "Git nicht vorhanden" -ForegroundColor Green)
@@ -99,11 +108,18 @@ else {
 Write-Host "Downloading Scripts from Github Repo" -ForegroundColor Green
 start-process powershell "git clone https://github.com/almir1904/AutoWindowsUpdate.git C:\Scripts\UpdateService"
 while (!(Test-Path "C:\Scripts\UpdateService\Install-Updates.ps1")) { Start-Sleep 10 }
+Write-Host "Please edit the Settings.ps1 File if needed and press enter"
+[void][System.Console]::ReadKey($FALSE)
+if ((Test-Path -Path "C:\Scripts\UpdateService\Settings.ps1")) 
+	{(Write-Host "Git vorhanden" -ForegroundColor Green
+	.\Settings.ps1)}
+
+
 Write-Host "Install Update Task" -ForegroundColor Yellow
 $argument = '-NonInteractive -NoLogo -NoProfile -ExecutionPolicy Bypass -File "C:\Scripts\UpdateService\Install-Updates.ps1"'
 $action = New-ScheduledTaskAction -Execute $PWSH -Argument $argument
 $principal = New-ScheduledTaskPrincipal -UserID "NT AUTHORITY\SYSTEM" -LogonType ServiceAccount -RunLevel Highest
-$trigger = New-ScheduledTaskTrigger -Weekly -At "23:00" -DaysOfWeek Saturday
+$trigger = New-ScheduledTaskTrigger -Weekly -At $MaintenanceTime -DaysOfWeek Saturday
 $task = New-ScheduledTask -Action $action -Principal $principal -Trigger $trigger
 Register-ScheduledTask "Windows Update Maintenance Script" -InputObject $task -Force
 
@@ -151,7 +167,7 @@ Write-Host "Install Script Upgrade Task" -ForegroundColor Yellow
 $argument = '-NonInteractive -NoLogo -NoProfile -ExecutionPolicy Bypass -File "C:\Scripts\UpdateService\Update-Scripts.ps1"'
 $action = New-ScheduledTaskAction -Execute $PWSH -Argument $argument -WorkingDirectory "C:\Scripts\UpdateService"
 $principal = New-ScheduledTaskPrincipal -UserID "NT AUTHORITY\SYSTEM" -LogonType ServiceAccount -RunLevel Highest
-$trigger = New-ScheduledTaskTrigger -Daily -At "22:00"
+$trigger = New-ScheduledTaskTrigger -Daily -At $UpdateTime
 $task = New-ScheduledTask -Action $action -Principal $principal -Trigger $trigger
 Register-ScheduledTask "UpdateService Script " -InputObject $task -Force
 

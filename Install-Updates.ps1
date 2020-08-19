@@ -1,6 +1,8 @@
 ﻿Import-Module PSWindowsUpdate
 $Logfile = "C:\Scripts\UpdateService\Logs\WindowsUpdate.log"
 cd C:\Scripts\UpdateService\
+if (Test-Path "C:\Scripts\UpdateService\Variables.ps1") {
+  .\Settings.ps1}
 #Update Script
 .\Update-Scripts.ps1
 #Start Service

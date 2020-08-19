@@ -1,0 +1,1 @@
+Get-WmiObject Win32_Service | where {$_.startmode -eq "Auto" -and $_.state -eq "Stopped"} | foreach { $_.StartService() }
