@@ -25,7 +25,9 @@
 $UpdateTime="22:00"
 $MaintenanceTime="23:00"
 
-
+Write-Host "Setup Powershell SSL" -ForegroundColor Yellow
+$AllProtocols = [System.Net.SecurityProtocolType]'Tls11,Tls12'
+[System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols
 
 
 
@@ -63,9 +65,6 @@ else {
     Write-Host "SQLServerClient Modul nicht installiert" -ForegroundColor Yellow
 	Install-Module -Name SqlServer -Force
 }
-Write-Host "Setup Powershell SSL" -ForegroundColor Yellow
-$AllProtocols = [System.Net.SecurityProtocolType]'Tls11,Tls12'
-[System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols
 
 if (Test-Path -Path C:\Scripts) {(Write-Host "Ordner Vorhanden" -ForegroundColor Green)} else {Write-Host "Ordner nicht Vorhanden" -ForegroundColor Red; (New-Item C:\Scripts -ItemType directory > $null) ; (Write-Host "Ordner erstellt" -ForegroundColor Green)}
 
@@ -111,8 +110,8 @@ while (!(Test-Path "C:\Scripts\UpdateService\Install-Updates.ps1")) { Start-Slee
 Write-Host "Please edit the Settings.ps1 File if needed and press enter"
 [void][System.Console]::ReadKey($FALSE)
 if ((Test-Path -Path "C:\Scripts\UpdateService\Settings.ps1")) 
-	{(Write-Host "Git vorhanden" -ForegroundColor Green
-	.\Settings.ps1)}
+	{Write-Host "Settings File vorhanden" -ForegroundColor Green
+	.\Settings.ps1}
 
 
 Write-Host "Install Update Task" -ForegroundColor Yellow
@@ -163,7 +162,16 @@ else {
 	
 }
 
-Write-Host "Install Script Upgrade Task" -ForegroundColor Yellow
+if (Get-ScheduledTask -Taskpath "\" -TaskName "UpdateService*" -ErrorAction SilentlyContinue) {
+    Write-Host "Vorhandener Task wird entfernt" -ForegroundColor Yellow
+	Get-ScheduledTask -Taskpath "\" -TaskName "UpdateService*" | Unregister-ScheduledTask -confirm:$false
+} 
+else {
+    Write-Host "UpdateTask nicht installiert"
+	
+}
+
+Write-Host "Install Script Upgrade Task" -ForegroundColor Green
 $argument = '-NonInteractive -NoLogo -NoProfile -ExecutionPolicy Bypass -File "C:\Scripts\UpdateService\Update-Scripts.ps1"'
 $action = New-ScheduledTaskAction -Execute $PWSH -Argument $argument -WorkingDirectory "C:\Scripts\UpdateService"
 $principal = New-ScheduledTaskPrincipal -UserID "NT AUTHORITY\SYSTEM" -LogonType ServiceAccount -RunLevel Highest
