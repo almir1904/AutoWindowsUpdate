@@ -162,14 +162,6 @@ else {
 	
 }
 
-if (Get-ScheduledTask -Taskpath "\" -TaskName "UpdateService*" -ErrorAction SilentlyContinue) {
-    Write-Host "Vorhandener Task wird entfernt" -ForegroundColor Yellow
-	Get-ScheduledTask -Taskpath "\" -TaskName "UpdateService*" | Unregister-ScheduledTask -confirm:$false
-} 
-else {
-    Write-Host "UpdateTask nicht installiert"
-	
-}
 
 Write-Host "Install Script Upgrade Task" -ForegroundColor Green
 $argument = '-NonInteractive -NoLogo -NoProfile -ExecutionPolicy Bypass -File "C:\Scripts\UpdateService\Update-Scripts.ps1"'
