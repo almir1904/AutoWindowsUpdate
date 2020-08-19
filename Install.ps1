@@ -110,8 +110,9 @@ while (!(Test-Path "C:\Scripts\UpdateService\Install-Updates.ps1")) { Start-Slee
 Write-Host "Please edit the Settings.ps1 File if needed and press enter"
 [void][System.Console]::ReadKey($FALSE)
 if ((Test-Path -Path "C:\Scripts\UpdateService\Settings.ps1")) 
-	{Write-Host "Settings File vorhanden" -ForegroundColor Green
+	{Write-Host "Settings File found" -ForegroundColor Green
 	.\Settings.ps1}
+	Else {Write-Host "No Settingsfile found using default Settings" -ForegroundColor Yellow}
 
 
 Write-Host "Install Update Task" -ForegroundColor Yellow

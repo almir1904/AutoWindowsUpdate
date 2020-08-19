@@ -1,5 +1,5 @@
-$AllowReboot="True"
-$Mail=""
-$Pushover=""
+$Global:AllowReboot="True"
+$Global:Mail=""
+$Global:Pushover=""
 $Global:UpdateTime="23:00"
 $Global:MaintenanceTime="23:30"
