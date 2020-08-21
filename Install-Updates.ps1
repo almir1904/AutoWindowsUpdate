@@ -18,3 +18,4 @@ if ($Autoreboot -eq $false)
 Else {Get-WindowsUpdate -install -acceptall -autoreboot -verbose  *> $Logfile}
 $Log = Get-Content $Logfile 
 Write-EventLog -LogName "Application" -Source "UpdateService" -EventID 1 -EntryType Information -Message ($Log | Format-List | Out-String) -Category 1 
+Send-Pushover $PushoverApi $PushoverUserkey -Title "$domain $Hostname wird aktualisiert" -Message $log
