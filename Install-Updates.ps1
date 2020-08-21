@@ -9,7 +9,7 @@ if (Test-Path "C:\Scripts\UpdateService\Settings.ps1") {
 set-service wuauserv -startup manual
 start-service wuauserv
 .\Wartung.ps1
-$logFileExists = Get-EventLog -list | Where-Object {$_.logdisplayname -eq "UpdateService"} 
+$logFileExists = Get-EventLog –LogName Application | Where-Object {$_.Source -eq "UpdateService"} 
 if (! $logFileExists) {
     New-EventLog –LogName Application –Source "UpdateService"
 }
