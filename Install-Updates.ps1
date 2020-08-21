@@ -1,7 +1,5 @@
 ﻿Import-Module PSWindowsUpdate
 $Title = "$domain $Hostname wird aktualisiert"
-$domain = $env:USERDNSDOMAIN
-$hostname = $env:computername
 $Logfile = "C:\Scripts\UpdateService\Logs\WindowsUpdate.log"
 cd C:\Scripts\UpdateService\
 if (Test-Path "C:\Scripts\UpdateService\Settings.ps1") {
