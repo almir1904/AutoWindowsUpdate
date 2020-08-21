@@ -1,5 +1,5 @@
-﻿$Gloabl:domain = $env:USERDNSDOMAIN
-$Gloabl:hostname = $env:computername
+﻿$Global:domain = $env:USERDNSDOMAIN
+$Global:hostname = $env:computername
 $Upf = "C:\Scripts\UpdateService\Logs\Uptime.log"
 $HashFile = "C:\Scripts\UpdateService\SHA256.hash"
 $HashFile2 = "C:\Scripts\UpdateService\Temp.hash"
