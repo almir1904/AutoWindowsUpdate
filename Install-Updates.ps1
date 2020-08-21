@@ -9,7 +9,10 @@ if (Test-Path "C:\Scripts\UpdateService\Settings.ps1") {
 set-service wuauserv -startup manual
 start-service wuauserv
 .\Wartung.ps1
-New-EventLog –LogName Application –Source "UpdateService"
+$logFileExists = Get-EventLog -list | Where-Object {$_.logdisplayname -eq "UpdateService"} 
+if (! $logFileExists) {
+    New-EventLog –LogName Application –Source "UpdateService"
+}
 if ($Autoreboot -eq $false)
 {Get-WindowsUpdate -install -acceptall -IgnoreReboot -verbose  *> $Logfile}
 Else {Get-WindowsUpdate -install -acceptall -autoreboot -verbose  *> $Logfile}
