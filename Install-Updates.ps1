@@ -1,5 +1,5 @@
 ﻿Import-Module PSWindowsUpdate
-$Title = "$domain $Hostname wird aktualisiert"
+$Title = "$Hostname $domain wurde aktualisiert und startet gleich neu"
 $Logfile = "C:\Scripts\UpdateService\Logs\WindowsUpdate.log"
 cd C:\Scripts\UpdateService\
 if (Test-Path "C:\Scripts\UpdateService\Settings.ps1") {
@@ -19,4 +19,4 @@ if ($Autoreboot -eq $false)
 Else {Get-WindowsUpdate -install -acceptall -autoreboot -verbose  *> $Logfile}
 $Log = Get-Content $Logfile 
 Write-EventLog -LogName "Application" -Source "UpdateService" -EventID 1 -EntryType Information -Message ($Log | Format-List | Out-String) -Category 1 
-.\Tools\Send-Pushover.ps1 $PushoverApi $PushoverUserkey -Title $Title -Message "Updates wurden installiert"
+.\Tools\Send-Pushover.ps1 $PushoverUserkey $PushoverApi -Title $Title -Message "Updates wurden installiert"
