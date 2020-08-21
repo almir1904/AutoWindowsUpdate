@@ -97,11 +97,11 @@ else {Write-Host "Powershell 6 nicht Vorhanden Fallback zu Default Powershell" -
 if (Get-ScheduledTask -Taskpath "\" -TaskName "Windows Update*" -ErrorAction SilentlyContinue) {
     Write-Host "Vorhandener Task wird entfernt" -ForegroundColor Yellow
 	Get-ScheduledTask -Taskpath "\" -TaskName "Windows Update*" | Unregister-ScheduledTask -confirm:$false
-} 
+	} 
 else {
     Write-Host "WartungsTask nicht installiert"
 	
-}
+	}
 
 
 Write-Host "Downloading Scripts from Github Repo" -ForegroundColor Green
@@ -111,8 +111,11 @@ Write-Host "Please edit the Settings.ps1 File if needed and press enter"
 [void][System.Console]::ReadKey($FALSE)
 if ((Test-Path -Path "C:\Scripts\UpdateService\Settings.ps1")) 
 	{Write-Host "Settings File found" -ForegroundColor Green
-	.\Settings.ps1}
-	Else {Write-Host "No Settingsfile found using default Settings" -ForegroundColor Yellow}
+	.\Settings.ps1
+	}
+else {
+	Write-Host "No Settingsfile found using default Settings" -ForegroundColor Yellow
+	}
 
 Write-Host "Install Update Task" -ForegroundColor Yellow
 $argument = '-NonInteractive -NoLogo -NoProfile -ExecutionPolicy Bypass -File "C:\Scripts\UpdateService\Install-Updates.ps1"'
