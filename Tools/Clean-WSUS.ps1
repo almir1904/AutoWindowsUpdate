@@ -4,6 +4,7 @@ $WinClientUpdates = $AllUpdates | where { $_.update.Title -like "*Windows 7*" -o
 $Otherupdates = $AllUpdates | where { $_.update.Title -like "*Windows 10 Version * for x86-based Systems*" -or $_.update.Title -like "*Feature*On*Demand*"} | where { $_.update.Title -notlike "*X64*" } | where { $_.update.Title -notlike "*AMD64*" } 
 $ItaniumUpdates = $AllUpdates | where { $_.update.Title -like "*Itanium*" -or $_.update.Title -like "*IA64*"} 
 $LanguageFeatureOnDemand = $AllUpdates | where { $_.update.Title -like "*LanguageFeatureOnDemand*" } 
+$Insider = $AllUpdates | where { $_.update.Title -like "*Windows-Insider*" } 
 
 $AllUpdates | where { $_.Update.Title -like "*Windows 10*N,*" } | Deny-WsusUpdate -Verbose
 $AllUpdates | where { $_.Update.Title -like "*Windows 10*N version*" } | Deny-WsusUpdate -Verbose
@@ -36,4 +37,5 @@ $ARMUpdates | Deny-WsusUpdate -Verbose
 $WinClientUpdates | Deny-WsusUpdate -Verbose
 $ItaniumUpdates | Deny-WsusUpdate -Verbose
 $LanguageFeatureOnDemand | Deny-WsusUpdate -Verbose
+$Insider | Deny-WsusUpdate -Verbose
 
