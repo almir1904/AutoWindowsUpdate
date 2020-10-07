@@ -3,6 +3,7 @@ $ARMUpdates = $AllUpdates | where { $_.update.Title -like "*ARM64*" }
 $WinClientUpdates = $AllUpdates | where { $_.update.Title -like "*Windows 7*" -or $_.Update.Title -like "*Windows 8*" -or $_.Update.Title -like "*Windows Server 2003*" -or $_.Update.Title -like "*Windows XP*" -or $_.Update.Title -like "*Windows Vista*" -or $_.Update.Title -like "*Windows Server 2008*" -or $_.Update.Title -like "*Windows Server 2012*" } | where { $_.update.Title -notlike "*Windows Server 2012 R2*" } | where { $_.Update.Title -notlike "*Windows Server 2016*" } | where { $_.Update.ProductTitles -notcontains "Windows Server 2016" -and $_.Update.ProductTitles -notcontains "Windows Server 2012 R2" -and $_.Update.ProductTitles -notcontains "Windows 10" }
 $Otherupdates = $AllUpdates | where { $_.update.Title -like "*Windows 10 Version * for x86-based Systems*" -or $_.update.Title -like "*Feature*On*Demand*"} | where { $_.update.Title -notlike "*X64*" } | where { $_.update.Title -notlike "*AMD64*" } 
 $ItaniumUpdates = $AllUpdates | where { $_.update.Title -like "*Itanium*" -or $_.update.Title -like "*IA64*"} 
+$LanguageFeatureOnDemand = $AllUpdates | where { $_.update.Title -like "*LanguageFeatureOnDemand*" } 
 
 $AllUpdates | where { $_.Update.Title -like "*Windows 10*N,*" } | Deny-WsusUpdate -Verbose
 $AllUpdates | where { $_.Update.Title -like "*Windows 10*N version*" } | Deny-WsusUpdate -Verbose
@@ -34,4 +35,5 @@ $Otherupdates | Deny-WsusUpdate -Verbose
 $ARMUpdates | Deny-WsusUpdate -Verbose
 $WinClientUpdates | Deny-WsusUpdate -Verbose
 $ItaniumUpdates | Deny-WsusUpdate -Verbose
+$LanguageFeatureOnDemand | Deny-WsusUpdate -Verbose
 
