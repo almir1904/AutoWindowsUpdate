@@ -30,7 +30,8 @@ $AllProtocols = [System.Net.SecurityProtocolType]'Tls11,Tls12'
 [System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols
 
 
-
+Write-Host "Installing Chocolatey" -ForegroundColor Yellow
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 
 $host.ui.RawUI.WindowTitle = "Maintaince Script installing"
@@ -72,15 +73,10 @@ if (!(Test-Path -Path "C:\Program Files\Git"))
 	{(Write-Host "Git nicht vorhanden" -ForegroundColor Green)
 	if (!(Test-Path -Path C:\Temp\Git.exe))
 	{
-	Write-Host "Downloading Git" -ForegroundColor Yellow
-	$url = "https://github.com/git-for-windows/git/releases/download/v2.23.0.windows.1/Git-2.23.0-64-bit.exe"
-	$path = "C:\Temp\Git.exe"
-	if (Test-Path -Path c:\Temp) {(Write-Host "Ordner Vorhanden" -ForegroundColor Green)} else {Write-Host "Ordner nicht Vorhanden" -ForegroundColor Red; (New-Item C:\Temp -ItemType directory > $null) ; (Write-Host "Ordner erstellt" -ForegroundColor Green)}
-	$client = New-Object System.Net.WebClient
-	$client.DownloadFile($url, $path)
-	}
 	Write-Host "Installing Git" -ForegroundColor Yellow
-	.\Git.exe /SP- /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS
+	#.\Git.exe /SP- /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS
+	choco install git.install -y
+	refreshenv
     new-item -path alias:git -value 'C:\Program Files\Git\bin\git.exe'
 	$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")}
 	else {Write-Host "Git bereits installiert" -ForegroundColor Green}
@@ -111,6 +107,7 @@ Write-Host "Please edit the Settings.ps1 File if needed and press enter"
 [void][System.Console]::ReadKey($FALSE)
 if ((Test-Path -Path "C:\Scripts\UpdateService\Settings.ps1")) 
 	{Write-Host "Settings File found" -ForegroundColor Green
+	cd C:\Scripts\UpdateService
 	.\Settings.ps1
 	}
 else {
