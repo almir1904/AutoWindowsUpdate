@@ -1,4 +1,5 @@
 $AllUpdates = Get-WsusUpdate -Approval AnyExceptDeclined -Classification All -Status Any
+$AnyUpdates = Get-WsusUpdate
 $ARMUpdates = $AllUpdates | where { $_.update.Title -like "*ARM64*" } 
 $WinClientUpdates = $AllUpdates | where { $_.update.Title -like "*Windows 7*" -or $_.Update.Title -like "*Windows 8*" -or $_.Update.Title -like "*Windows Server 2003*" -or $_.Update.Title -like "*Windows XP*" -or $_.Update.Title -like "*Windows Vista*" -or $_.Update.Title -like "*Windows Server 2008*" -or $_.Update.Title -like "*Windows Server 2012*" } | where { $_.update.Title -notlike "*Windows Server 2012 R2*" } | where { $_.Update.Title -notlike "*Windows Server 2016*" } | where { $_.Update.ProductTitles -notcontains "Windows Server 2016" -and $_.Update.ProductTitles -notcontains "Windows Server 2012 R2" -and $_.Update.ProductTitles -notcontains "Windows 10" }
 $Otherupdates = $AllUpdates | where { $_.update.Title -like "*Windows 10 Version * for x86-based Systems*" -or $_.update.Title -like "*Feature*On*Demand*"} | where { $_.update.Title -notlike "*X64*" } | where { $_.update.Title -notlike "*AMD64*" } 
@@ -23,7 +24,7 @@ $Otherupdates4 = $AllUpdates | where { $_.update.Title -like "*Windows 10 Versio
 $Otherupdates5 = $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1709 for x86-based Systems*" -or $_.update.Title -like "*Windows 10 Version 1709 for x64-based Systems*"}  
 $Otherupdates6 = $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1803 for x86-based Systems*" -or $_.update.Title -like "*Windows 10 Version 1803 for x64-based Systems*"}  
 $Otherupdates7 = $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1809 for x86-based Systems*" -or $_.update.Title -like "*Windows 10 Version 1809 for x64-based Systems*"}  
-$Otherupdates8 = $AllUpdates | where { $_.update.Title -like "*Version 1503*" -or $_.update.Title -like "*Version 1503*" -or $_.update.Title -like "*Version 1511*" -or $_.update.Title -like "*Version 1607*" -or $_.update.Title -like "*Version 1703*" -or $_.update.Title -like "*Version 1709*" -or $_.update.Title -like "*Version 1803*" -or $_.update.Title -like "*Version 1809*"}  
+$Otherupdates8 = $AnyUpdates | where { $_.update.Title -like "*Version Next*" -or $_.update.Title -like "*Version 1503*" -or $_.update.Title -like "*Version 1511*" -or $_.update.Title -like "*Version 1607*" -or $_.update.Title -like "*Version 1703*" -or $_.update.Title -like "*Version 1709*" -or $_.update.Title -like "*Version 1803*" -or $_.update.Title -like "*Version 1809*" -or $_.update.Title -like "*Version 1903*"}  
 
 
 $Otherupdates1 | Deny-WsusUpdate -Verbose
