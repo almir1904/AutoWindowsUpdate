@@ -65,12 +65,13 @@ if (Get-Module -ListAvailable -Name SqlServer) {
 else {
     Write-Host "SQLServerClient Modul nicht installiert" -ForegroundColor Yellow
 	Install-Module -Name SqlServer -Force
+	choco install sqlserver-cmdlineutils -y
 }
 
 if (Test-Path -Path C:\Scripts) {(Write-Host "Ordner Vorhanden" -ForegroundColor Green)} else {Write-Host "Ordner nicht Vorhanden" -ForegroundColor Red; (New-Item C:\Scripts -ItemType directory > $null) ; (Write-Host "Ordner erstellt" -ForegroundColor Green)}
 
 if (!(Test-Path -Path "C:\Program Files\Git")) 
-	{(Write-Host "Git nicht vorhanden" -ForegroundColor Green)
+	{(Write-Host "Git nicht vorhanden" -ForegroundColor Green)}
 	if (!(Test-Path -Path C:\Temp\Git.exe))
 	{
 	Write-Host "Installing Git" -ForegroundColor Yellow

@@ -23,6 +23,7 @@ $Otherupdates4 = $AllUpdates | where { $_.update.Title -like "*Windows 10 Versio
 $Otherupdates5 = $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1709 for x86-based Systems*" -or $_.update.Title -like "*Windows 10 Version 1709 for x64-based Systems*"}  
 $Otherupdates6 = $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1803 for x86-based Systems*" -or $_.update.Title -like "*Windows 10 Version 1803 for x64-based Systems*"}  
 $Otherupdates7 = $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1809 for x86-based Systems*" -or $_.update.Title -like "*Windows 10 Version 1809 for x64-based Systems*"}  
+$Otherupdates7 = $AllUpdates | where { $_.update.Title -like "*Version 1503*" -or $_.update.Title -like "*Version 1503*" -or $_.update.Title -like "*Version 1511*" -or $_.update.Title -like "*Version 1607*" -or $_.update.Title -like "*Version 1703*" -or $_.update.Title -like "*Version 1709*" -or $_.update.Title -like "*Version 1803*" -or $_.update.Title -like "*Version 1809*"}  
 
 
 $Otherupdates1 | Deny-WsusUpdate -Verbose
@@ -32,6 +33,7 @@ $Otherupdates4 | Deny-WsusUpdate -Verbose
 $Otherupdates5 | Deny-WsusUpdate -Verbose
 $Otherupdates6 | Deny-WsusUpdate -Verbose
 $Otherupdates7 | Deny-WsusUpdate -Verbose
+$Otherupdates8 | Deny-WsusUpdate -Verbose
 
 
 $Otherupdates | Deny-WsusUpdate -Verbose
