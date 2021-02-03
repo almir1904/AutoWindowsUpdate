@@ -12,7 +12,7 @@ else {Write-Host "Logs Ordner nicht vorhanden" -ForegroundColor Red; (New-Item C
 
 #WSUS Skript
 if ((Get-WindowsFeature UpdateServices).InstallState -eq "Installed") {
-    Write-Host "WSUS Skript wird ausgeführt"
+    Write-Host "WSUS Script wird ausgeführt"
 	.\Tools\WSUS.exe -FirstRun
 	.\Tools\Clean-WSUS.ps1
 } 
@@ -27,6 +27,12 @@ if (Get-Service -name MSExchangeServiceHost -ErrorAction SilentlyContinue) {
 else {
     Write-Host "Exchange is not installed on $hostname" -ForegroundColor Yellow
 }
+#Deduplication
+if ((Get-WindowsFeature FS-Data-Deduplication).InstallState -eq "Installed"){
+	Write-Host "Deduplication is active"
+	.\Tools\Deduplication.ps1
+}
+Deduplizierung aktiv
 #Check Uptime
 $Up = Get-CimInstance -ClassName win32_OperatingSystem | Select lastbootuptime > $Upf
 $Content = Get-content $Upf | select-object -skip 3 

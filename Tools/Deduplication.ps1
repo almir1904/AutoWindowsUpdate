@@ -1,0 +1,1 @@
+Get-DedupStatus |  Start-DedupJob -Type GarbageCollection -Memory 99
