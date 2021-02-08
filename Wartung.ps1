@@ -32,7 +32,7 @@ if ((Get-WindowsFeature FS-Data-Deduplication).InstallState -eq "Installed"){
 	Write-Host "Deduplication is active"
 	.\Tools\Deduplication.ps1
 }
-Deduplizierung aktiv
+
 #Check Uptime
 $Up = Get-CimInstance -ClassName win32_OperatingSystem | Select lastbootuptime > $Upf
 $Content = Get-content $Upf | select-object -skip 3 
