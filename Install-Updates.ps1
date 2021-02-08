@@ -1,9 +1,10 @@
 ﻿Import-Module PSWindowsUpdate
-$Title = "$Hostname $domain wurde aktualisiert und startet gleich neu"
+
 $Logfile = "C:\Scripts\UpdateService\Logs\WindowsUpdate.log"
 cd C:\Scripts\UpdateService\
 if (Test-Path "C:\Scripts\UpdateService\Settings.ps1") {
   .\Settings.ps1}
+$Title = "$env:computername.$env:userdnsdomain wurde aktualisiert und startet gleich neu"
 #Update Script
 .\Update-Scripts.ps1
 #Start Service
