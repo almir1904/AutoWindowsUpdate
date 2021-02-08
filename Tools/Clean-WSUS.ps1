@@ -49,6 +49,7 @@ $ItaniumUpdates | Deny-WsusUpdate -Verbose
 $LanguageFeatureOnDemand | Deny-WsusUpdate -Verbose
 $Insider | Deny-WsusUpdate -Verbose
 
+Write-Host "Nuke WSUS Files"
 $wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer()
 [reflection.assembly]::LoadWithPartialName("Microsoft.UpdateServices.Administration") | Out-Null
 $wsus.getupdates() | Where {$_.isdeclined -match 'true'} | ForEach-Object { $wsus.DeleteUpdate($_.Id.UpdateID); Write-Host $_.Title entfernt } 
