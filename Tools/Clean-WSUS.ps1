@@ -40,11 +40,22 @@ $AllUpdates | where { $_.Update.Title -like "*Funktionsupdate* Version 1803*" } 
 $AllUpdates | where { $_.Update.Title -like "*Funktionsupdate* Version 1809*" } | Deny-WsusUpdate -Verbose
 $AllUpdates | where { $_.Update.Title -like "*Funktionsupdate* Version 1903*" } | Deny-WsusUpdate -Verbose
 $AllUpdates | where { $_.Update.Title -like "*Funktionsupdate* Version 1909*" } | Deny-WsusUpdate -Verbose
-#$AllUpdates | where { $_.Update.Title -like "*Funktionsupdate* Version 2004*" } | Deny-WsusUpdate -Verbose
 $AllUpdates | where { $_.Update.Title -like "*Funktionsupdate*x86*" } | Deny-WsusUpdate -Verbose
 
 
-$OldUpdates = $AnyUpdates | where { $_.update.Title -like "*Version 1503*" -or $_.update.Title -like "*Version 1503*" -or $_.update.Title -like "*Version 1511*" -or $_.update.Title -like "*Version 1607*" -or $_.update.Title -like "*Version 1703*" -or $_.update.Title -like "*Version 1709*" -or $_.update.Title -like "*Version 1803*" -or $_.update.Title -like "*Version 1809*" -or $_.update.Title -like "*Version 1903*"}  
+$OldUpdates = $AnyUpdates | where { 
+    $_.update.Title -like "*Version 1503*" 
+-or $_.update.Title -like "*Version 1503*" 
+-or $_.update.Title -like "*Version 1507*" 
+-or $_.update.Title -like "*Version 1511*" 
+-or $_.update.Title -like "*Version 1607*" 
+-or $_.update.Title -like "*Version 1703*" 
+-or $_.update.Title -like "*Version 1709*" 
+-or $_.update.Title -like "*Version 1803*" 
+-or $_.update.Title -like "*Version 1809*" 
+-or $_.update.Title -like "*Version 1903*"
+-or $_.update.Title -like "*Version 1909*"
+}  
 
 
 $OldUpdates | Deny-WsusUpdate -Verbose
