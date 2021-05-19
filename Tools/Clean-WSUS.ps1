@@ -26,7 +26,11 @@ $AllUpdates | where { $_.Update.Title -like "*Funktionsupdate* en-us x86*" } | D
 $AllUpdates | where { $_.Update.Title -like "*Preview*" } | Deny-WsusUpdate -Verbose
 $AllUpdates | where { $_.Update.Title -like "*Vorabversion*" } | Deny-WsusUpdate -Verbose
 $AllUpdates | where { $_.Update.Title -like "*Vorschau*" } | Deny-WsusUpdate -Verbose
+$AllUpdates | where { $_.Update.Title -like "*Edge-Dev*" } | Deny-WsusUpdate -Verbose
+$AllUpdates | where { $_.Update.Title -like "*Edge-Beta*" } | Deny-WsusUpdate -Verbose
 
+
+$AllUpdates | where { $_.update.Title -like "*Windows 10 Version Next*"} | Deny-WsusUpdate -Verbose
 $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1503*"} | Deny-WsusUpdate -Verbose 
 $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1507*"} | Deny-WsusUpdate -Verbose 
 $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1511*"} | Deny-WsusUpdate -Verbose 
@@ -37,29 +41,25 @@ $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1803*"} | Deny-
 $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1809*"} | Deny-WsusUpdate -Verbose 
 $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1903*"} | Deny-WsusUpdate -Verbose
 $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1909*"} | Deny-WsusUpdate -Verbose
-
+$AllUpdates | where { $_.update.Title -like "*Version 10 Version 2004*"} | Deny-WsusUpdate -Verbose
 
 $AnyUpdates = Get-WsusUpdate
-
-$AnyUpdates | where { $_.update.Title -like "*Windows 10 Version 1503*"} | Deny-WsusUpdate -Verbose 
-$AnyUpdates | where { $_.update.Title -like "*Windows 10 Version 1507*"} | Deny-WsusUpdate -Verbose 
-$AnyUpdates | where { $_.update.Title -like "*Windows 10 Version 1511*"} | Deny-WsusUpdate -Verbose 
-$AnyUpdates | where { $_.update.Title -like "*Windows 10 Version 1607*"} | Deny-WsusUpdate -Verbose 
-$AnyUpdates | where { $_.update.Title -like "*Windows 10 Version 1703*"} | Deny-WsusUpdate -Verbose
-$AnyUpdates | where { $_.update.Title -like "*Windows 10 Version 1709*"} | Deny-WsusUpdate -Verbose
-$AnyUpdates | where { $_.update.Title -like "*Windows 10 Version 1803*"} | Deny-WsusUpdate -Verbose 
-$AnyUpdates | where { $_.update.Title -like "*Windows 10 Version 1809*"} | Deny-WsusUpdate -Verbose 
-$AnyUpdates | where { $_.update.Title -like "*Windows 10 Version 1903*"} | Deny-WsusUpdate -Verbose
-$AnyUpdates | where { $_.update.Title -like "*Windows 10 Version 1909*"} | Deny-WsusUpdate -Verbose
+$AnyUpdates | where { $_.update.Title -like "*Version 1503*"} | Deny-WsusUpdate -Verbose 
+$AnyUpdates | where { $_.update.Title -like "*Version 1507*"} | Deny-WsusUpdate -Verbose 
+$AnyUpdates | where { $_.update.Title -like "*Version 1511*"} | Deny-WsusUpdate -Verbose 
+$AnyUpdates | where { $_.update.Title -like "*Version 1607*"} | Deny-WsusUpdate -Verbose 
+$AnyUpdates | where { $_.update.Title -like "*Version 1703*"} | Deny-WsusUpdate -Verbose
+$AnyUpdates | where { $_.update.Title -like "*Version 1709*"} | Deny-WsusUpdate -Verbose
+$AnyUpdates | where { $_.update.Title -like "*Version 1803*"} | Deny-WsusUpdate -Verbose 
+$AnyUpdates | where { $_.update.Title -like "*Version 1809*"} | Deny-WsusUpdate -Verbose 
+$AnyUpdates | where { $_.update.Title -like "*Version 1903*"} | Deny-WsusUpdate -Verbose
+$AnyUpdates | where { $_.update.Title -like "*Version 1909*"} | Deny-WsusUpdate -Verbose
+$AnyUpdates | where { $_.update.Title -like "*Version 2004*"} | Deny-WsusUpdate -Verbose
 
 
 $AnyUpdates | where { $_.update.Title -like "*Office 2007*"} | Deny-WsusUpdate -Verbose 
 $AnyUpdates | where { $_.update.Title -like "*Office 2010*"} | Deny-WsusUpdate -Verbose 
 $AnyUpdates | where { $_.update.Title -like "*Office 2013*"} | Deny-WsusUpdate -Verbose 
-
-
-
-
 
 
 
