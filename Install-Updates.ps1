@@ -1,10 +1,13 @@
 ﻿Import-Module PSWindowsUpdate
-
+$PC = "$env:computername.$env:userdnsdomain"
 $Logfile = "C:\Scripts\UpdateService\Logs\WindowsUpdate.log"
 cd C:\Scripts\UpdateService\
 if (Test-Path "C:\Scripts\UpdateService\Settings.ps1") {
   .\Settings.ps1}
-$Title = "$env:computername.$env:userdnsdomain wurde aktualisiert und startet gleich neu"
+
+if ($AllowReboot -eq $false)
+{$Title = "$PC wurde aktualisiert"}
+Else {$Title = "$PC wurde aktualisiert und startet gleich neu"}
 #Update Script
 .\Update-Scripts.ps1
 #Start Service
@@ -15,7 +18,7 @@ $logFileExists = Get-EventLog –LogName Application | Where-Object {$_.Source -
 if (! $logFileExists) {
     New-EventLog –LogName Application –Source "UpdateService"
 }
-if ($Autoreboot -eq $false)
+if ($AllowReboot -eq $false)
 {Get-WindowsUpdate -install -acceptall -IgnoreReboot -verbose  *> $Logfile}
 Else {Get-WindowsUpdate -install -acceptall -autoreboot -verbose  *> $Logfile}
 $Log = Get-Content $Logfile 
