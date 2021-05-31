@@ -23,3 +23,4 @@ Get-WindowsUpdate -install -acceptall -autoreboot -verbose  *> $Logfile}
 $Log = Get-Content $Logfile 
 Write-EventLog -LogName "Application" -Source "UpdateService" -EventID 1 -EntryType Information -Message ($Log | Format-List | Out-String) -Category 1 
 .\Tools\Send-Pushover.ps1 $PushoverUserkey $PushoverApi -Title $Title -Message "Updates wurden installiert"
+
