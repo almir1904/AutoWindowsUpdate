@@ -64,7 +64,7 @@ if (Get-Module -ListAvailable -Name SqlServer) {
 } 
 else {
     Write-Host "SQLServerClient Modul nicht installiert" -ForegroundColor Yellow
-	Install-Module -Name SqlServer -Force
+	Install-Module -Name SqlServer -Force -AllowClobber
 	choco install sqlserver-cmdlineutils -y
 }
 

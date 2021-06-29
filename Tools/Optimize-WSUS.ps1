@@ -48,6 +48,13 @@
   Optimize-WsusServer.ps1 -InstallDailyTask -CheckConfig -OptimizeServer
 #>
 
+$File = "C:\Program Files\Update Services\WebServices\ClientWebService\web.config"
+$ACL = Get-ACL -Path $File
+$AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule("$env:USERNAME","Fullcontrol","Allow")
+$ACL.SetAccessRule($AccessRule)
+$ACL | Set-Acl -Path $File
+
+
 
 [CmdletBinding()]
 param (
