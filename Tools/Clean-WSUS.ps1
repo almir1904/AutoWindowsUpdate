@@ -11,6 +11,7 @@ $Insider = $AllUpdates | where { $_.update.Title -like "*Windows-Insider*" }
 $UnAppUpdates | where { $_.Update.Title -like "*Preview*" } | Deny-WsusUpdate -Verbose
 $UnAppUpdates | where { $_.Update.Title -like "*Vorabversion*" } | Deny-WsusUpdate -Verbose
 $UnAppUpdates | where { $_.Update.Title -like "*Vorschau*" } | Deny-WsusUpdate -Verbose
+$UnAppUpdates | where { $_.Update.Title -like "*Edge-Beta*" } | Deny-WsusUpdate -Verbose
 
 
 $AllUpdates | where { $_.Update.Title -like "*Windows 10*N,*" } | Deny-WsusUpdate -Verbose
@@ -41,7 +42,7 @@ $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1803*"} | Deny-
 $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1809*"} | Deny-WsusUpdate -Verbose 
 $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1903*"} | Deny-WsusUpdate -Verbose
 $AllUpdates | where { $_.update.Title -like "*Windows 10 Version 1909*"} | Deny-WsusUpdate -Verbose
-$AllUpdates | where { $_.update.Title -like "*Version 10 Version 2004*"} | Deny-WsusUpdate -Verbose
+$AllUpdates | where { $_.update.Title -like "*Windows 10 Version 2004*"} | Deny-WsusUpdate -Verbose
 
 $AnyUpdates = Get-WsusUpdate
 $AnyUpdates | where { $_.update.Title -like "*Version 1503*"} | Deny-WsusUpdate -Verbose 
